@@ -32,7 +32,7 @@
 </plist>
 }}}
 
-== ArrayList for `<array>` ==
+== java.util.ArrayList for `<array>` ==
 
 *Code:*
 {{{
