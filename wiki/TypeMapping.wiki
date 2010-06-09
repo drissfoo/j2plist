@@ -10,3 +10,4 @@ For the plist format, the tags, related java classes and types are as follows:
 || `<real>`    || `java.lang.Double, java.lang.Float, double, float` ||
 || `<string>`    || `java.lang.String` ||
 || `<true/>` or `<false/>`    || `java.lang.Boolean, boolean` ||
+|| `<data>`      || _not implemented yet_ ||
