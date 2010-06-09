@@ -1,5 +1,5 @@
 #labels Featured
-= java.util.Map for <dict> =
+= java.util.Map for `<dict>` =
 
 *Code:*
 {{{
@@ -32,7 +32,7 @@
 </plist>
 }}}
 
-== ArrayList for <array> ==
+== ArrayList for `<array>` ==
 
 *Code:*
 {{{
@@ -60,7 +60,7 @@
 </plist>
 }}}
 
-== POJO for <dict> ==
+== POJO for `<dict>` ==
 
 *Code:*
 {{{
