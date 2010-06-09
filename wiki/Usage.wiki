@@ -42,7 +42,7 @@
  phones.add("503-333-5555");
 
  try {
-    System.out.println(plist.encode(map));
+    System.out.println(plist.encode(phones));
  } catch (Exception e) {
     e.printStackTrace();
  }
@@ -64,25 +64,31 @@
 
 *Code:*
 {{{
-class People {
-  public String name;
-  public String surname;
-  public int age;
-  public String getName() {
-    return name;
-  }
-  public String getSurname() {
-    return surname;
-  }
-  public int getAge() {
-    return age;
-  }
-}
+ class People {
+   public String name;
+   public String surname;
+   public int age;
+   public String getName() {
+     return name;
+   }
+   public String getSurname() {
+     return surname;
+   }
+   public int getAge() {
+     return age;
+   }
+ }
 
-People people = new People();
-people.name="John";
-people.surname="Doe";
-people.age=25;
+ People people = new People();
+ people.name="John";
+ people.surname="Doe";
+ people.age=25;
+
+ try {
+    System.out.println(plist.encode(people));
+ } catch (Exception e) {
+    e.printStackTrace();
+ }
 }}}
 
 *Result:*
