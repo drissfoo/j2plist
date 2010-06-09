@@ -1,5 +1,5 @@
 #labels Featured
-= java.util.Map for `<dict>` =
+= `java.util.Map` for `<dict>` =
 
 *Code:*
 {{{
@@ -32,7 +32,7 @@
 </plist>
 }}}
 
-== java.util.ArrayList for `<array>` ==
+== `java.util.ArrayList` for `<array>` ==
 
 *Code:*
 {{{
