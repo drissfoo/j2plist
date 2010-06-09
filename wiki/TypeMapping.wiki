@@ -1,0 +1,12 @@
+= Property list types =
+
+For the plist format, the tags, related java classes and types are as follows:
+
+|| *plist tag* || *java* ||
+|| <array>     || java.util.ArrayList ||
+|| <dict>      || java.util.HashMap,POJO ||
+|| <date>    || java.util.Date||
+|| <integer>    || java.lang.Integer, int ||
+|| <real>    || java.lang.Double, java.lang.Float, double, float ||
+|| <string>    || java.lang.String ||
+|| <true/> or <false/>    || java.lang.Boolean, boolean ||
