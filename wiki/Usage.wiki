@@ -1,5 +1,5 @@
 #labels Featured
-= Simple usage=
+= java.util.Map for <dict> =
 
 *Code:*
 {{{
@@ -28,6 +28,78 @@
 	<integer>25</integer>
 	<key>name</key>
 	<string>John Doe</string>
+	</dict>
+</plist>
+}}}
+
+== ArrayList for <array> ==
+
+*Code:*
+{{{
+ PList plist = new PList();
+ ArrayList<String> phones = new ArrayList<String>();
+ phones.add("408-974-0000");
+ phones.add("503-333-5555");
+
+ try {
+    System.out.println(plist.encode(map));
+ } catch (Exception e) {
+    e.printStackTrace();
+ }
+}}}
+
+*Result:*
+{{{
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+	<array>
+	<string>408-974-0000</string>
+	<string>503-333-5555</string>
+	</array>
+</plist>
+}}}
+
+== POJO for <dict> ==
+
+*Code:*
+{{{
+class People {
+  public String name;
+  public String surname;
+  public int age;
+  public String getName() {
+    return name;
+  }
+  public String getSurname() {
+    return surname;
+  }
+  public int getAge() {
+    return age;
+  }
+}
+
+People people = new People();
+people.name="John";
+people.surname="Doe";
+people.age=25;
+}}}
+
+*Result:*
+{{{
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+	<dict>
+	<key>people</key>
+	<dict>
+	<key>surname</key>
+	<string>Doe</string>
+	<key>age</key>
+	<integer>25</integer>
+	<key>name</key>
+	<string>John</string>
+	</dict>
 	</dict>
 </plist>
 }}}
