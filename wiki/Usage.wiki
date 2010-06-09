@@ -1,0 +1,36 @@
+#summary One-sentence summary of this page.
+
+= Simple usage=
+
+*Code:*
+{{{
+ PList plist = new PList();
+ Map map = new HashMap();
+ map.put("name", "John Doe");
+ map.put("age", 25);
+ map.put("single", true);
+
+ try {
+    System.out.println(plist.encode(map));
+ } catch (Exception e) {
+    e.printStackTrace();
+ }
+}}}
+
+*Result:*
+{{{
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+	<dict>
+	<key>single</key>
+	<true/>
+	<key>age</key>
+	<integer>25</integer>
+	<key>name</key>
+	<string>John Doe</string>
+	</dict>
+</plist>
+}}}
+
+
