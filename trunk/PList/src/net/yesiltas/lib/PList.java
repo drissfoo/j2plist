@@ -13,8 +13,24 @@ public class PList {
 				"<!DOCTYPE plist PUBLIC \"-//Apple//DTD PLIST 1.0//EN\" \"http://www.apple.com/DTDs/PropertyList-1.0.dtd\">\n"+
 				"<plist version=\"1.0\">\n";
 	private static final String footer = "</plist>";
-	
 	private static Exception invalidObjectType=new Exception("Invalid object type.");
+	
+	private SimpleDateFormat dateFormat = new SimpleDateFormat();
+	
+	public SimpleDateFormat getDateFormat() {
+		return dateFormat;
+	}
+	public void setDateFormat(SimpleDateFormat dateFormat) {
+		this.dateFormat = dateFormat;
+	}
+	
+	public PList() {
+		super();
+	}
+	public PList(SimpleDateFormat dateFormat) {
+		super();
+		this.dateFormat = dateFormat;
+	}
 	public String encode(Object object) throws Exception{
 		return header+convertToPlist(object)+footer;
 	}	
@@ -75,8 +91,7 @@ public class PList {
 		if (elem instanceof String){
 			return "\t<string>"+(String)elem+"</string>\n";
 		} else if (elem instanceof Date){
-			SimpleDateFormat format = new SimpleDateFormat();
-			return "\t<date>"+format.format((Date)elem)+"</date>\n";
+			return "\t<date>"+dateFormat.format((Date)elem)+"</date>\n";
 		} else if (elem instanceof Integer){
 			return "\t<integer>"+(Integer)elem+"</integer>\n";
 		} else if (elem instanceof Float){
