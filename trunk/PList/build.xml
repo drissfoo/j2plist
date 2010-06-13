@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project basedir="." default="build" name="j2plist">
+	<property name="project.name" value="j2plist" />
+	<property name="app.version" value="0.2" />
+	<property name="build.dir" value="build" />
+	<target depends="clean,init,compile,makejar" name="build">
+	</target>
+    <target name="init">
+        <mkdir dir="${build.dir}/classes"/>
+    </target>
+    <target name="clean">
+        <delete dir="${build.dir}/classes"/>
+    </target>
+    <target name="makejar">
+    	<jar destfile="${build.dir}/${project.name}-${app.version}.jar" basedir="${build.dir}/classes" />
+    </target>
+	<target name="compile">
+        <javac destdir="${build.dir}/classes">
+            <src path="src"/>
+        </javac>
+	</target>
+</project>
