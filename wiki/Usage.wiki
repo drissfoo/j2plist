@@ -130,8 +130,8 @@
 }}}
 
 *Result:*
-{{{
 Default date format:
+{{{
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
@@ -140,7 +140,9 @@ Default date format:
 	<date>6/13/10 10:10 PM</date>
 	</dict>
 </plist>
+}}}
 Custom date format:
+{{{
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
