@@ -1,22 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project basedir="." default="build" name="j2plist">
 	<property name="project.name" value="j2plist" />
-	<property name="app.version" value="0.2" />
+	<property name="app.version" value="0.3" />
 	<property name="build.dir" value="build" />
-	<target depends="clean,init,compile,makejar" name="build">
+	<property name="dist.dir" value="dist" />
+	<property name="jsonic.file" value="lib/jsonic-1.2.0.jar" />
+	<target depends="init,compile,makejar,makezip,clean" name="build">
 	</target>
-    <target name="init">
-        <mkdir dir="${build.dir}/classes"/>
-    </target>
     <target name="clean">
-        <delete dir="${build.dir}/classes"/>
+        <delete dir="${build.dir}"/>
+    	<delete dir="${dist.dir}/lib"/>
     </target>
-    <target name="makejar">
-    	<jar destfile="${build.dir}/${project.name}-${app.version}.jar" basedir="${build.dir}/classes" />
+    <target name="init">
+    	<delete dir="${build.dir}"/>
+    	<delete dir="${dest.dir}"/>
+        <mkdir dir="${build.dir}/classes"/>
+    	<mkdir dir="${dist.dir}/lib" />
     </target>
 	<target name="compile">
         <javac destdir="${build.dir}/classes">
             <src path="src"/>
+        	<classpath location="${jsonic.file}" />
         </javac>
 	</target>
+    <target name="makejar">
+    	<jar destfile="${dist.dir}/${project.name}-${app.version}.jar" basedir="${build.dir}/classes" />
+    </target>
+    <target name="makezip">
+    	<copy file="${jsonic.file}" todir="${dist.dir}/lib" overwrite="true" />
+    	<zip destfile="${dist.dir}/${project.name}-${app.version}.zip" basedir="${dist.dir}" />
+    </target>
 </project>

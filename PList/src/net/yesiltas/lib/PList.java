@@ -1,6 +1,7 @@
 package net.yesiltas.lib;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -8,12 +9,16 @@ import java.util.Iterator;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
+
+import net.arnx.jsonic.JSON;
+
 public class PList {
 	private static final String header = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"+
 				"<!DOCTYPE plist PUBLIC \"-//Apple//DTD PLIST 1.0//EN\" \"http://www.apple.com/DTDs/PropertyList-1.0.dtd\">\n"+
 				"<plist version=\"1.0\">\n";
 	private static final String footer = "</plist>";
 	private static Exception invalidObjectType=new Exception("Invalid object type.");
+	private static Exception invalidJsonFormat=new Exception("Invalid json format.");
 	
 	private SimpleDateFormat dateFormat = new SimpleDateFormat();
 	
@@ -34,19 +39,26 @@ public class PList {
 	public String encode(Object object) throws Exception{
 		return header+convertToPlist(object)+footer;
 	}	
+	public String encode(String jsonStr) throws Exception{
+		JSON json = new JSON ();
+		Object object;
+		if (jsonStr.trim().startsWith("{")){
+			object = (Map<?,?>) json.parse(jsonStr);
+		} else if (jsonStr.trim().startsWith("[")){
+			object = (ArrayList<?>)json.parse(jsonStr);	
+		} else {
+		   throw invalidJsonFormat;	
+		}
+		return header+convertToPlist(object)+footer;
+	}
 	private String convertToPlist(Object object) throws Exception{
 		StringBuffer resultBuffer = new StringBuffer();
 		if (object instanceof ArrayList<?>){
 			resultBuffer.append(convertArrayToPlist(object));	
 		} else if (object instanceof Map<?,?>) {
-			resultBuffer.append("\t<dict>\n");
 			resultBuffer.append(convertMapToPlist(object));
-			resultBuffer.append("\t</dict>\n");
 		} else if (isBean(object)) {
-			resultBuffer.append("\t<dict>\n");
-			resultBuffer.append("\t<key>"+object.getClass().getSimpleName().toLowerCase(Locale.ENGLISH)+"</key>\n");
 			resultBuffer.append(convertBeanToPlist(object));
-			resultBuffer.append("\t</dict>\n");
 		} else {
 			resultBuffer.append(convertElementToPlist(object));
 		}
@@ -65,22 +77,14 @@ public class PList {
 		StringBuffer resultBuffer = new StringBuffer();		
 		Set<?> keySet = (Set<?>)((Map<?,?>)map).keySet();
 		Iterator<?> it = keySet.iterator();
+		resultBuffer.append("\t<dict>\n");
 		while (it.hasNext()){
 			Object key = it.next();
 			Object value = ((Map<?,?>)map).get(key);
-			if (value instanceof ArrayList<?>) {
-				resultBuffer.append("\t<key>"+key+"</key>\n");
-				resultBuffer.append(convertArrayToPlist(value));
-			} else if (value instanceof Map<?,?>){
-				resultBuffer.append(convertMapToPlist(value));
-			} else if (isBean(value)) {
-				resultBuffer.append("\t<key>"+key+"</key>\n");
-				resultBuffer.append(convertBeanToPlist(value));
-			} else {
-				resultBuffer.append("\t<key>"+key+"</key>\n");
-				resultBuffer.append(convertElementToPlist(value));
-			}
+			resultBuffer.append("\t<key>"+key+"</key>\n");
+			resultBuffer.append(convertToPlist(value));
 		}
+		resultBuffer.append("\t</dict>\n");
 		return resultBuffer.toString();
 	}
 	
@@ -98,6 +102,8 @@ public class PList {
 			return "\t<real>"+(Float)elem+"</real>\n";
 		} else if (elem instanceof Double){
 			return "\t<real>"+(Double)elem+"</real>\n";
+		} else if (elem instanceof BigDecimal){
+			return "\t<real>"+(BigDecimal)elem+"</real>\n";
 		} else if (elem instanceof Boolean){
 			if((Boolean)elem){
 				return "\t<true/>\n";
@@ -111,6 +117,7 @@ public class PList {
 	
 	private String convertBeanToPlist(Object object) throws Exception{
 		StringBuffer resultBuffer = new StringBuffer();		
+		resultBuffer.append("\t<key>"+object.getClass().getSimpleName().toLowerCase(Locale.ENGLISH)+"</key>\n");
 		resultBuffer.append("\t<dict>\n");
 		Class<?> cls = object.getClass();
 		Method methods[] = cls.getMethods();
@@ -119,7 +126,7 @@ public class PList {
 			if (!methodName.equals("getClass") && methodName.startsWith("get")){
 				resultBuffer.append("\t<key>"+methodName.substring(3).toLowerCase(Locale.ENGLISH)+"</key>\n");
 				Object retobj = method.invoke(object, new Object[0]);	
-				resultBuffer.append(convertElementToPlist(retobj));
+				resultBuffer.append(convertToPlist(retobj));
 			}			
 		}
 		resultBuffer.append("\t</dict>\n");
