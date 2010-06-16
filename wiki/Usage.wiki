@@ -30,6 +30,7 @@
 	<string>John Doe</string>
 	</dict>
 </plist>
+
 }}}
 
 == `java.util.ArrayList` for `<array>` ==
@@ -78,7 +79,7 @@
      return age;
    }
  }
-
+ PList plist = new PList();
  People people = new People();
  people.name="John";
  people.surname="Doe";
@@ -96,7 +97,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
-	<dict>
 	<key>people</key>
 	<dict>
 	<key>surname</key>
@@ -105,7 +105,6 @@
 	<integer>25</integer>
 	<key>name</key>
 	<string>John</string>
-	</dict>
 	</dict>
 </plist>
 }}}
