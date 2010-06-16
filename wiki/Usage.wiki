@@ -109,6 +109,32 @@
 </plist>
 }}}
 
+== json string for `<dict>` ==
+*Code:*
+{{{
+	String jsonStr = "{\"product\":{\"name\":\"Banana\",\"id\":123,\"price\":23.0}}";
+	PList plist = new PList();
+	System.out.println(plist.encode(jsonStr));
+}}}
+
+*Result:*
+{{{
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+	<dict>
+	<key>product</key>
+	<dict>
+	<key>name</key>
+	<string>Banana</string>
+	<key>id</key>
+	<real>123</real>
+	<key>price</key>
+	<real>23.0</real>
+	</dict>
+	</dict>
+</plist>
+}}}
 == Date Formatting ==
 
 *Code:*
