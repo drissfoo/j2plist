@@ -1,0 +1,178 @@
+# `java.util.Map` for `<dict>` #
+
+**Code:**
+```
+ PList plist = new PList();
+ Map map = new HashMap();
+ map.put("name", "John Doe");
+ map.put("age", 25);
+ map.put("single", true);
+
+ try {
+    System.out.println(plist.encode(map));
+ } catch (Exception e) {
+    e.printStackTrace();
+ }
+```
+
+**Result:**
+```
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+	<dict>
+	<key>single</key>
+	<true/>
+	<key>age</key>
+	<integer>25</integer>
+	<key>name</key>
+	<string>John Doe</string>
+	</dict>
+</plist>
+
+```
+
+## `java.util.ArrayList` for `<array>` ##
+
+**Code:**
+```
+ PList plist = new PList();
+ ArrayList<String> phones = new ArrayList<String>();
+ phones.add("408-974-0000");
+ phones.add("503-333-5555");
+
+ try {
+    System.out.println(plist.encode(phones));
+ } catch (Exception e) {
+    e.printStackTrace();
+ }
+```
+
+**Result:**
+```
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+	<array>
+	<string>408-974-0000</string>
+	<string>503-333-5555</string>
+	</array>
+</plist>
+```
+
+## POJO for `<dict>` ##
+
+**Code:**
+```
+ class People {
+   public String name;
+   public String surname;
+   public int age;
+   public String getName() {
+     return name;
+   }
+   public String getSurname() {
+     return surname;
+   }
+   public int getAge() {
+     return age;
+   }
+ }
+ PList plist = new PList();
+ People people = new People();
+ people.name="John";
+ people.surname="Doe";
+ people.age=25;
+
+ try {
+    System.out.println(plist.encode(people));
+ } catch (Exception e) {
+    e.printStackTrace();
+ }
+```
+
+**Result:**
+```
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+	<key>people</key>
+	<dict>
+	<key>surname</key>
+	<string>Doe</string>
+	<key>age</key>
+	<integer>25</integer>
+	<key>name</key>
+	<string>John</string>
+	</dict>
+</plist>
+```
+
+## json string for `<dict>` ##
+**Code:**
+```
+	String jsonStr = "{\"product\":{\"name\":\"Banana\",\"id\":123,\"price\":23.0}}";
+	PList plist = new PList();
+	System.out.println(plist.encode(jsonStr));
+```
+
+**Result:**
+```
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+	<dict>
+	<key>product</key>
+	<dict>
+	<key>name</key>
+	<string>Banana</string>
+	<key>id</key>
+	<real>123</real>
+	<key>price</key>
+	<real>23.0</real>
+	</dict>
+	</dict>
+</plist>
+```
+## Date Formatting ##
+
+**Code:**
+```
+	Date now = new Date(System.currentTimeMillis());
+	SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
+	PList plist = new PList();
+	Map map = new HashMap();
+	
+	map.put("birthDate",now);
+	
+	System.out.println("Default date format:");
+	System.out.println(plist.encode(map));
+	
+	plist.setDateFormat(format);
+	System.out.println("Custom date format:");
+	System.out.println(plist.encode(map));
+```
+
+**Result:**
+Default date format:
+```
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+	<dict>
+	<key>birthDate</key>
+	<date>6/13/10 10:10 PM</date>
+	</dict>
+</plist>
+```
+Custom date format:
+```
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+	<dict>
+	<key>birthDate</key>
+	<date>13.06.2010 22:10:11</date>
+	</dict>
+</plist>
+```
